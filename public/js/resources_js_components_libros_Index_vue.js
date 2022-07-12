@@ -23,7 +23,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   name: "index",
   data: function data() {
     return {
-      libros: []
+      libros: [],
+      loading: false
     };
   },
   mounted: function mounted() {
@@ -38,14 +39,22 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                _context.next = 2;
+                _this.loading = true;
+                _context.next = 3;
                 return _this.axios.get('/api/libros').then(function (res) {
-                  _this.libros = res.data.data;
+                  if (res.data.code === 200) {
+                    _this.libros = res.data.data;
+                  } else {
+                    _this.libros = [];
+                  }
                 })["catch"](function (err) {
                   _this.libros = [];
                 });
 
-              case 2:
+              case 3:
+                _this.loading = false;
+
+              case 4:
               case "end":
                 return _context.stop();
             }
@@ -203,6 +212,38 @@ var _hoisted_26 = {
   "class": "col-6"
 };
 var _hoisted_27 = ["onClick"];
+var _hoisted_28 = {
+  key: 0,
+  "class": "col-6 pt-3"
+};
+
+var _hoisted_29 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+  "class": "card"
+}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+  "class": "card-body text-center"
+}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h5", {
+  "class": "card-title"
+}, "No se han encontrado libros en el sistema. Por favor agregue un libro.")])], -1
+/* HOISTED */
+);
+
+var _hoisted_30 = [_hoisted_29];
+var _hoisted_31 = {
+  key: 1,
+  "class": "col-6 pt-3"
+};
+
+var _hoisted_32 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+  "class": "card"
+}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+  "class": "card-body text-center"
+}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h5", {
+  "class": "card-title"
+}, "Cargando...")])], -1
+/* HOISTED */
+);
+
+var _hoisted_33 = [_hoisted_32];
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_router_link = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("router-link");
 
@@ -253,7 +294,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     , _hoisted_27)])])])])]);
   }), 128
   /* KEYED_FRAGMENT */
-  ))])])])]);
+  )), $data.libros.length === 0 && !$data.loading ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_28, _hoisted_30)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), $data.loading ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_31, _hoisted_33)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])])])]);
 }
 
 /***/ }),

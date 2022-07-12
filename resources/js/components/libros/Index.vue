@@ -60,6 +60,20 @@
 						  </div>
 						</div>
 					</div>
+					<div class="col-6 pt-3" v-if="libros.length === 0 && !loading">
+						<div class="card">
+						  	<div class="card-body text-center">
+						    	<h5 class="card-title">No se han encontrado libros en el sistema. Por favor agregue un libro.</h5>
+							</div>
+						</div>
+					</div>
+					<div class="col-6 pt-3" v-if="loading" >
+						<div class="card">
+						  	<div class="card-body text-center">
+						    	<h5 class="card-title">Cargando...</h5>
+							</div>
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -71,7 +85,8 @@
 		name:"index",
 		data(){
 			return{
-				libros:[]
+				libros:[],
+				loading:false,
 			}
 		},
 		mounted(){
@@ -79,13 +94,19 @@
 		},
 		methods:{
 			async getLibros(){
+				this.loading = true;
 				await this.axios.get('/api/libros')
 					.then(res => {
-						this.libros = res.data.data
+						if(res.data.code === 200){
+							this.libros = res.data.data
+						}else{
+							this.libros = [];
+						}
 					})
 					.catch(err => {
 						this.libros = [];
 					});
+				this.loading = false;
 			},
 			async del(id, titulo){
 				if(confirm(`¿Desea borrar el libro "${titulo}"?`)){
